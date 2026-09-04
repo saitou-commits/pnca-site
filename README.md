@@ -18,7 +18,7 @@ Studio.Design で作られていた現行サイトを、同じ雰囲気のまま
 
 1. **問い合わせフォームの送り先** — `site.js` の先頭にある `CONTACT_ENDPOINT` に受け口URLを入れる。
    いちばん簡単なのは Google Apps Script のウェブアプリ（受け取ったJSONをメールで転送）か Formspree。
-   空のままだと `CONTACT_MAILTO` 宛てのメール下書きが開く方式になる（アドレスは要変更）。
+   空のままだと `CONTACT_MAILTO`（info@pnca.co.jp = Googleグループ、斉藤・牧野・岩井に配信）宛てのメール下書きが開く方式になる。
 2. **内容の最終確認** — 本社住所・代表者名・各店の営業時間・広島PARCO店のオープン時期・「総フォロワー19万人」。
    Instagram の心斎橋アカウントは `@pnca.korea` に変更済み（旧 `@pancha.korea` は存在しないため）。
 3. **Search Console の所有権確認タグ** — 旧サイトの `google-site-verification` を `<head>` に戻すか、DNS で確認し直す。

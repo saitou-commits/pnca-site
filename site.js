@@ -10,7 +10,7 @@
   /* ---- 設定: 問い合わせフォームの送り先 --------------------------------
      Google Apps Script のウェブアプリURL、Formspree などのURLを入れると
      fetch(POST, JSON) で送信します。空のままなら mailto で下書きを開きます。 */
-  var CONTACT_ENDPOINT = '';
+  var CONTACT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyb5sgUqw1M2zA18r--zKDCg2R5GcVaFbgKDqzrbAwpFtEp_PVUvmHMSxqzVf4nJ_O28w/exec';
   var CONTACT_MAILTO = 'info@pnca.co.jp'; // Googleグループ(斉藤・牧野・岩井に配信)
 
   /* nav drawer */

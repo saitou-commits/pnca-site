@@ -11,7 +11,7 @@
      Google Apps Script のウェブアプリURL、Formspree などのURLを入れると
      fetch(POST, JSON) で送信します。空のままなら mailto で下書きを開きます。 */
   var CONTACT_ENDPOINT = '';
-  var CONTACT_MAILTO = 'info@pnca.co.jp'; // Googleグループ(斞藤・牧野・岩井に配信)
+  var CONTACT_MAILTO = 'info@pnca.co.jp'; // Googleグループ(斉藤・牧野・岩井に配信)
 
   /* nav drawer */
   var toggle = document.querySelector('.nav-toggle');

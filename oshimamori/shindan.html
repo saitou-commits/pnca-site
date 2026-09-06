@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ja">
+<title>推し守 診断</title>
+<meta charset="utf-8">
+<link rel="canonical" href="https://pnca.co.jp/oshimamori/shindan.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&display=swap">
+<style>
+  /* 単一テーマ(ブランドの桜色の紙に固定)。写真の地色と揃えるため色は固定値 */
+  :root{
+    --paper:#F7ECEA;        /* ラベル写真の地色 */
+    --paper-deep:#F3E1E2;
+    --shiro:#FBFAFB;        /* OPP写真の地色 */
+    --momo:#E39DB4;         /* 水引の桃 */
+    --momo-deep:#CF7D98;
+    --momo-soft:#F4D2DA;
+    --kin:#C4A46E;          /* 金 */
+    --kin-line:#DCC7A3;
+    --cha:#5B4636;          /* 焦げ茶 */
+    --cha-2:#7C6759;
+    --muted:#A6928D;
+    --line:#EBD6DA;
+    --shadow:0 30px 60px -40px rgba(91,70,54,.45);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth; color-scheme:light}
+  body{
+    margin:0; background:var(--paper); color:var(--cha);
+    font-family:"Zen Kaku Gothic New","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size:16px; line-height:1.9; letter-spacing:.03em; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.mincho{
+    font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+    font-weight:600; letter-spacing:.08em; text-wrap:balance; margin:0; color:var(--cha);
+  }
+  .latin{font-family:"Cormorant Garamond","Times New Roman",serif; font-weight:600; letter-spacing:.32em; text-transform:uppercase; color:var(--kin); font-size:.72rem}
+  p{margin:0}
+  a{color:inherit}
+  img{max-width:100%; display:block}
+  button{font:inherit; color:inherit; cursor:pointer}
+  :focus-visible{outline:2px solid var(--momo-deep); outline-offset:3px; border-radius:4px}
+  .hidden{display:none!important}
+  .wrap{width:min(100% - 44px, 1120px); margin-inline:auto}
+  .narrow{width:min(100% - 44px, 600px); margin-inline:auto}
+  .hair{height:1px; background:var(--kin-line); border:0; margin:0}
+
+  /* ---------- header ---------- */
+  .top{display:flex; align-items:center; justify-content:space-between; padding:16px 0 8px}
+  .logo{display:flex; align-items:center; gap:12px; text-decoration:none}
+  .logo img{width:56px; height:56px; border-radius:50%; box-shadow:0 6px 16px -8px rgba(91,70,54,.35)}
+  .wordmark{font-family:"Shippori Mincho",serif; font-weight:700; font-size:1.25rem; letter-spacing:.2em; line-height:1}
+  .wordmark small{display:block; font-family:"Cormorant Garamond",serif; font-weight:600; font-size:.6rem; letter-spacing:.34em; color:var(--kin); margin-top:5px}
+  .top nav{display:flex; gap:26px; font-size:.84rem; letter-spacing:.08em}
+  .top nav a{text-decoration:none; color:var(--cha-2)}
+  @media (max-width:700px){ .top nav{display:none} .logo img{width:48px;height:48px} }
+
+  /* ---------- hero ---------- */
+  .hero{position:relative; padding:24px 0 40px; overflow:hidden}
+  .hero-grid{display:grid; gap:24px; align-items:center}
+  @media (min-width:900px){ .hero-grid{grid-template-columns:1fr 1fr; gap:24px; min-height:640px} }
+  .hero-copy{display:grid; gap:22px; align-content:center}
+  .hero h1{font-size:clamp(2.1rem, 5.2vw, 3.6rem); line-height:1.5; font-weight:600; letter-spacing:.12em}
+  .hero h1 em{font-style:normal; color:var(--momo-deep)}
+  @media (min-width:900px){
+    .hero-copy{grid-template-columns:auto 1fr; gap:36px; align-items:start}
+    .hero h1{writing-mode:vertical-rl; text-orientation:mixed; height:380px; line-height:1.85; letter-spacing:.2em; font-size:clamp(2.2rem, 3.6vw, 3.1rem)}
+    .hero-sub{padding-top:14px; align-self:end}
+  }
+  .lede{color:var(--cha-2); max-width:30em; font-size:.98rem}
+  .cta-row{display:flex; flex-wrap:wrap; gap:12px 18px; align-items:center; margin-top:22px}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.5em;
+    padding:15px 30px; border-radius:999px; border:1px solid var(--momo); background:var(--momo); color:#fff;
+    font-weight:700; font-size:.98rem; letter-spacing:.08em; text-decoration:none; text-shadow:0 1px 0 rgba(0,0,0,.06);
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    box-shadow:0 14px 28px -16px rgba(207,125,152,.7);
+  }
+  .btn:hover{transform:translateY(-1px); background:var(--momo-deep); border-color:var(--momo-deep)}
+  .btn.ghost{background:transparent; color:var(--cha); border-color:var(--kin); box-shadow:none}
+  .btn.ghost:hover{background:#fff}
+  .btn.small{padding:11px 20px; font-size:.88rem}
+  .btn.x{background:#1d1d1f; border-color:#1d1d1f; box-shadow:none}
+  .cta-note{font-size:.76rem; color:var(--muted); letter-spacing:.06em}
+
+  .banners{display:flex; gap:10px; margin-top:8px}
+  .banner{
+    writing-mode:vertical-rl; font-family:"Shippori Mincho",serif; font-weight:600; font-size:.84rem; letter-spacing:.32em;
+    padding:16px 9px 22px; background:#FBF3F3; color:var(--cha); border:1px solid var(--momo-soft);
+    border-radius:3px; position:relative; min-height:124px; line-height:1;
+    box-shadow:inset 0 0 0 3px #FBF3F3, inset 0 0 0 4px var(--kin-line);
+  }
+  .banner::before{content:""; position:absolute; top:-6px; left:50%; width:7px; height:7px; margin-left:-3.5px; border-radius:50%; background:var(--kin)}
+  .banner::after{content:""; position:absolute; bottom:-14px; left:50%; width:2px; height:14px; margin-left:-1px; background:var(--momo)}
+
+  .hero-art{position:relative; height:520px}
+  @media (min-width:900px){ .hero-art{height:640px} }
+  .hero-art .tag{position:absolute; right:4%; top:0; width:46%; max-width:300px; transform:rotate(6deg); transform-origin:top center; filter:drop-shadow(0 30px 30px rgba(91,70,54,.14))}
+  .hero-art .bottle{position:absolute; left:12%; bottom:0; width:30%; max-width:180px; filter:drop-shadow(0 30px 30px rgba(91,70,54,.16))}
+  .hero-art canvas{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
+  @media (max-width:899px){
+    .hero-art{height:440px}
+    .hero-art .tag{right:6%; width:44%}
+    .hero-art .bottle{left:10%; width:32%}
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:88px 0}
+  @media (max-width:700px){ section{padding:60px 0} }
+  .sec-head{margin-bottom:34px; text-align:center}
+  .sec-head .latin{display:block; margin-bottom:12px}
+  .sec-head h2{font-size:clamp(1.6rem, 3.4vw, 2.3rem); line-height:1.6}
+  .sec-head p{color:var(--cha-2); margin:14px auto 0; max-width:34em; font-size:.96rem}
+  .shiro{background:var(--shiro)}
+
+  /* ---------- concept ---------- */
+  .concept{padding:0 0 88px}
+  .concept .store{width:100%; aspect-ratio:21/9; object-fit:cover; object-position:center 40%}
+  @media (max-width:700px){ .concept .store{aspect-ratio:4/3} .concept{padding-bottom:60px} }
+  .concept .st{ text-align:center; padding:56px 22px 0; display:grid; gap:14px; justify-items:center}
+  .concept h2{font-size:clamp(1.5rem, 3.2vw, 2.2rem); line-height:1.7}
+  .concept p{color:var(--cha-2); max-width:34em}
+  .motifs{display:flex; gap:28px; justify-content:center; margin-top:18px; font-size:.72rem; letter-spacing:.14em; color:var(--muted)}
+  .motifs span{display:grid; justify-items:center; gap:6px}
+  .motifs svg{width:32px; height:32px}
+
+  /* ---------- product ---------- */
+  .prod{display:grid; gap:36px; align-items:center}
+  @media (min-width:860px){ .prod{grid-template-columns:.9fr 1.1fr; gap:56px} }
+  .prod .photo{position:relative}
+  .prod .photo img{width:min(100%, 380px); margin-inline:auto; filter:drop-shadow(0 40px 40px rgba(91,70,54,.14))}
+  .prod h2{font-size:clamp(1.8rem, 3.6vw, 2.5rem); margin:10px 0 14px}
+  .prod .copy{color:var(--cha-2); max-width:32em}
+  .spec{display:grid; grid-template-columns:auto 1fr; gap:6px 18px; font-size:.86rem; margin:26px 0 22px; border-top:1px solid var(--kin-line); padding-top:18px}
+  .spec dt{color:var(--muted); margin:0; white-space:nowrap; letter-spacing:.1em} .spec dd{margin:0; color:var(--cha-2)}
+  .price{font-family:"Shippori Mincho",serif; font-weight:700; font-size:1.5rem; font-variant-numeric:tabular-nums; letter-spacing:.04em}
+  .price small{font-family:"Zen Kaku Gothic New",sans-serif; font-weight:500; font-size:.72rem; color:var(--muted); margin-left:8px; letter-spacing:.06em}
+  .label-back{margin-top:64px; display:grid; gap:12px; justify-items:center}
+  .label-back img{width:min(100%, 640px); border-radius:8px; box-shadow:var(--shadow)}
+  .cap{font-size:.74rem; color:var(--muted); letter-spacing:.12em}
+
+  /* ---------- quiz ---------- */
+  .card{background:#fff; border:1px solid var(--momo-soft); border-radius:18px; box-shadow:inset 0 0 0 5px #fff, inset 0 0 0 6px var(--kin-line), var(--shadow); overflow:hidden}
+  .card-head{display:grid; justify-items:center; padding:26px 22px 0}
+  .card-head img{width:64px; height:64px; border-radius:50%}
+  .quiz-intro{padding:16px 22px 32px; text-align:center}
+  .quiz-intro h3{font-size:1.3rem; margin-bottom:8px}
+  .quiz-intro p{color:var(--cha-2); margin-bottom:22px; font-size:.94rem}
+  .q-body{padding:26px 24px 24px}
+  .progress{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px}
+  .cord{display:flex; gap:5px; flex:1}
+  .cord i{height:4px; flex:1; border-radius:99px; background:var(--line)}
+  .cord i.on{background:var(--kin-line)}
+  .cord i.now{background:var(--momo)}
+  .qno{font-family:"Shippori Mincho",serif; font-size:.82rem; letter-spacing:.14em; color:var(--muted); white-space:nowrap}
+  .q-text{font-family:"Shippori Mincho",serif; font-size:1.18rem; line-height:1.7; font-weight:600; margin-bottom:18px}
+  .answers{display:grid; gap:10px}
+  .ans{
+    text-align:left; padding:14px 16px; border-radius:12px; border:1px solid var(--line); background:var(--paper);
+    line-height:1.55; font-size:.95rem; display:flex; gap:12px; align-items:flex-start;
+    transition:border-color .12s ease, transform .12s ease, background .12s ease;
+  }
+  .ans:hover{border-color:var(--momo); background:#fff; transform:translateX(2px)}
+  .ans .k{font-family:"Shippori Mincho",serif; color:var(--momo-deep); font-weight:700; flex:none; width:1.4em}
+  .q-foot{display:flex; justify-content:space-between; align-items:center; margin-top:16px; font-size:.8rem; color:var(--muted)}
+  .link-btn{background:none; border:0; padding:0; color:var(--muted); text-decoration:underline; text-underline-offset:3px}
+  .link-btn:disabled{opacity:.35; text-decoration:none; cursor:default}
+
+  /* ---------- 札(CSS) ---------- */
+  .fuda{
+    --w:84px; width:var(--w); aspect-ratio:3/5; position:relative; display:grid; place-items:center;
+    background:#FBEEF0; clip-path:polygon(0 12%, 50% 0, 100% 12%, 100% 100%, 0 100%);
+    border-radius:0 0 4px 4px;
+  }
+  .fuda::before{content:""; position:absolute; inset:5px; clip-path:polygon(0 12%, 50% 0, 100% 12%, 100% 100%, 0 100%); border:1px solid var(--kin-line); pointer-events:none}
+  .fuda .t{writing-mode:vertical-rl; font-family:"Shippori Mincho",serif; font-weight:700; font-size:calc(var(--w) * .2); letter-spacing:.2em; color:var(--cha); line-height:1; margin-top:8%}
+  .fuda .sk{position:absolute; width:22%; opacity:.8}
+  .fuda .sk.a{left:6%; top:16%} .fuda .sk.b{right:6%; bottom:8%}
+  .fuda-wrap{display:grid; justify-items:center; gap:0}
+  .fuda-wrap .string{width:2px; height:16px; background:var(--momo)}
+  .fuda-wrap{filter:drop-shadow(0 10px 12px rgba(91,70,54,.14))}
+
+  /* ---------- result ---------- */
+  .result-card{background:#fff; border:1px solid var(--momo-soft); border-radius:18px; box-shadow:inset 0 0 0 5px #fff, inset 0 0 0 6px var(--kin-line), var(--shadow); overflow:hidden; position:relative}
+  .rc-top{background:var(--paper); padding:28px 26px 22px 26px; position:relative; min-height:220px; display:grid; align-content:end}
+  .rc-top .lbl{font-size:.68rem; letter-spacing:.26em; color:var(--momo-deep); margin-bottom:8px}
+  .rc-top .tname{font-family:"Shippori Mincho",serif; font-weight:700; font-size:clamp(1.9rem, 7vw, 2.6rem); line-height:1.25; letter-spacing:.06em; max-width:70%}
+  .rc-top .tkana{font-size:.72rem; letter-spacing:.24em; color:var(--cha-2); margin-top:8px}
+  .rc-top .bottle{position:absolute; right:18px; top:-12px; width:76px; filter:drop-shadow(0 16px 16px rgba(91,70,54,.16))}
+  .rc-top .sk{position:absolute; width:40px; opacity:.7} .rc-top .sk.a{left:10px; top:12px} .rc-top .sk.b{right:120px; top:26px; width:26px}
+  .rc-body{padding:22px 26px 18px}
+  .rc-catch{font-family:"Shippori Mincho",serif; font-size:1.1rem; font-weight:600; margin-bottom:16px}
+  .rc-catch::before{content:"「"} .rc-catch::after{content:"」"}
+  .omikuji{display:grid; grid-template-columns:repeat(3,1fr); gap:6px 12px; margin:0; padding:14px 0; border-block:1px solid var(--line)}
+  .omikuji div{display:flex; justify-content:space-between; align-items:baseline; font-size:.76rem; color:var(--cha-2); gap:6px}
+  .omikuji dt,.omikuji dd{margin:0}
+  .omikuji dd{font-family:"Shippori Mincho",serif; font-weight:700; font-size:.95rem; color:var(--cha)}
+  .omikuji dd.top{color:var(--momo-deep)}
+  .rc-need{display:flex; align-items:center; gap:18px; padding-top:16px}
+  .rc-need .fuda{--w:58px}
+  .rc-need .lbl{font-size:.66rem; letter-spacing:.2em; color:var(--muted); display:block; margin-bottom:2px}
+  .rc-need .mname{font-family:"Shippori Mincho",serif; font-weight:700; font-size:1.5rem; color:var(--momo-deep); letter-spacing:.1em; line-height:1.2}
+  .rc-need .mread{font-size:.7rem; color:var(--muted); letter-spacing:.14em; margin-top:4px}
+  .rc-foot{display:flex; justify-content:space-between; align-items:center; padding:10px 26px 14px; border-top:1px solid var(--line); font-size:.7rem; color:var(--muted); letter-spacing:.12em}
+  .rc-foot b{font-family:"Shippori Mincho",serif; color:var(--cha); letter-spacing:.16em; font-weight:600}
+
+  .result-note{margin:26px 0 0}
+  .result-note h3{font-size:1.05rem; margin-bottom:8px}
+  .result-note p{color:var(--cha-2); font-size:.95rem}
+  .kotoba{margin-top:18px; padding:18px; border-radius:12px; background:#fff; border:1px solid var(--line); text-align:center}
+  .kotoba .lbl{font-size:.66rem; letter-spacing:.22em; color:var(--momo-deep); display:block; margin-bottom:4px}
+  .kotoba .t{font-family:"Shippori Mincho",serif; font-weight:600; font-size:1.05rem}
+  .lucky{margin-top:12px; padding:12px 16px; border-left:2px solid var(--kin); font-size:.9rem}
+  .lucky .lbl{font-size:.66rem; letter-spacing:.18em; color:var(--muted); display:block}
+  .share{margin-top:26px; display:grid; gap:10px}
+  .share .btn{width:100%}
+  .share-hint{font-size:.76rem; color:var(--muted); text-align:center}
+  .rec{margin-top:36px; display:grid; grid-template-columns:96px 1fr; gap:22px; align-items:center; padding:22px; background:#fff; border:1px solid var(--line); border-radius:16px}
+  .rec img{width:100%; filter:drop-shadow(0 16px 16px rgba(91,70,54,.14))}
+  .rec h3{font-size:1.25rem; margin:2px 0 6px}
+  .rec p{font-size:.88rem; color:var(--cha-2)}
+  .again{display:flex; justify-content:center; margin-top:26px; font-size:.9rem}
+
+  /* ---------- 願い札 ---------- */
+  .negai{display:grid; grid-template-columns:repeat(6,1fr); gap:18px}
+  @media (max-width:900px){ .negai{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:520px){ .negai{grid-template-columns:repeat(2,1fr); gap:16px} }
+  .negai article{display:grid; justify-items:center; text-align:center; gap:10px}
+  .negai .fuda{--w:96px}
+  .negai h3{font-size:1.02rem; letter-spacing:.14em; margin-top:6px}
+  .negai .rd{font-size:.64rem; letter-spacing:.16em; color:var(--muted); display:block; margin-top:2px}
+  .negai .kt{font-size:.8rem; color:var(--cha-2); line-height:1.7}
+
+  /* ---------- series ---------- */
+  .series{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+  @media (max-width:760px){ .series{grid-template-columns:1fr; gap:34px} }
+  .s-item{display:grid; gap:12px; text-align:center}
+  .s-item figure{margin:0; aspect-ratio:4/5; border-radius:16px; overflow:hidden; display:grid; place-items:center; background:var(--shiro)}
+  .s-item figure img{width:100%; height:100%; object-fit:contain; transition:transform .5s ease}
+  .s-item:hover figure img{transform:scale(1.03)}
+  .s-item h3{font-size:1.1rem; margin-top:6px}
+  .s-item .latin{display:block; margin-top:4px}
+  .s-item p{font-size:.86rem; color:var(--cha-2)}
+  .tag-pill{display:inline-block; font-size:.66rem; letter-spacing:.18em; padding:4px 12px; border-radius:999px; border:1px solid var(--kin-line); color:var(--kin); justify-self:center}
+
+  /* ---------- how ---------- */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:0}
+  @media (max-width:760px){ .steps{grid-template-columns:1fr} }
+  .step{padding:26px 26px; text-align:center; border-left:1px solid var(--kin-line)}
+  .step:first-child{border-left:0}
+  @media (max-width:760px){ .step{border-left:0; border-top:1px solid var(--kin-line)} .step:first-child{border-top:0} }
+  .step .n{font-family:"Shippori Mincho",serif; font-size:1.6rem; font-weight:600; color:var(--momo-deep); line-height:1}
+  .step h3{font-size:1.05rem; margin:10px 0 6px}
+  .step p{font-size:.88rem; color:var(--cha-2)}
+
+  /* ---------- world ---------- */
+  .world{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  @media (max-width:640px){ .world{grid-template-columns:1fr} }
+  .world figure{margin:0; border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
+  .world img{width:100%; aspect-ratio:6/5; object-fit:cover}
+  .world figcaption{font-size:.74rem; color:var(--muted); letter-spacing:.12em; padding:10px 4px 0}
+
+  /* ---------- faq / footer ---------- */
+  .faq{display:grid; gap:0; max-width:720px; margin-inline:auto; border-top:1px solid var(--kin-line)}
+  details{border-bottom:1px solid var(--kin-line); padding:0 6px}
+  summary{cursor:pointer; padding:18px 0; font-weight:600; list-style:none; display:flex; justify-content:space-between; gap:12px; font-family:"Shippori Mincho",serif; letter-spacing:.06em}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"＋"; color:var(--kin); font-weight:400}
+  details[open] summary::after{content:"－"}
+  details p{padding:0 0 18px; color:var(--cha-2); font-size:.92rem}
+  footer{padding:36px 0 56px; font-size:.74rem; color:var(--muted); display:grid; gap:12px; text-align:center; justify-items:center}
+  footer img{width:48px; height:48px; border-radius:50%}
+  footer .disc{max-width:60em}
+  footer nav{display:flex; flex-wrap:wrap; gap:16px; justify-content:center}
+  footer nav a{text-decoration:none}
+
+  .toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); opacity:0; background:var(--cha); color:#fff; padding:10px 18px; border-radius:999px; font-size:.85rem; pointer-events:none; transition:opacity .2s ease, transform .2s ease; z-index:9}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+  .reveal{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:.001; transform:translateY(16px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+  /* ---------- 診断メニュー(LP導線+ハブ共通) ---------- */
+  .menu{display:grid; gap:14px}
+  .menu-3{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:820px){ .menu-3{grid-template-columns:1fr} }
+  .m-item{
+    display:grid; grid-template-columns:52px 1fr auto; gap:16px; align-items:center; text-decoration:none;
+    padding:18px 20px; background:#fff; border:1px solid var(--line); border-radius:16px;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .m-item:hover{transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--momo-soft)}
+  .seal{
+    width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:var(--paper);
+    font-family:"Shippori Mincho",serif; font-weight:700; font-size:1.3rem; color:var(--momo-deep);
+    box-shadow:inset 0 0 0 1px var(--kin-line), inset 0 0 0 4px var(--paper), inset 0 0 0 5px var(--kin-line);
+  }
+  .m-body h3{font-size:1.05rem; margin:2px 0 4px; letter-spacing:.06em}
+  .m-body p{font-size:.84rem; color:var(--cha-2); line-height:1.7}
+  .m-status{display:inline-block; font-size:.62rem; letter-spacing:.18em; padding:2px 9px; border-radius:999px; border:1px solid var(--kin-line); color:var(--kin)}
+  .m-status.on{background:var(--momo); border-color:var(--momo); color:#fff}
+  .m-arrow{font-family:"Cormorant Garamond",serif; font-size:1.3rem; color:var(--kin)}
+  .m-item.soon{opacity:.85}
+
+  /* ---------- ハブ ---------- */
+  .hub-hero{padding:24px 0 8px; text-align:center; display:grid; gap:10px; justify-items:center}
+  .hub-hero h1{font-size:clamp(1.8rem, 4.4vw, 2.6rem); line-height:1.5; letter-spacing:.14em}
+  .hub-hero p{color:var(--cha-2); max-width:32em}
+  .back{font-size:.82rem; color:var(--cha-2); text-decoration:none; letter-spacing:.06em}
+  .back:hover{color:var(--momo-deep)}
+
+  /* ---------- 座席診断フォーム・結果 ---------- */
+  .form{display:grid; gap:20px; padding:18px 24px 28px}
+  .f-row{display:grid; gap:8px}
+  .f-label{font-family:"Shippori Mincho",serif; font-size:.82rem; letter-spacing:.16em; color:var(--momo-deep); font-weight:600}
+  .form select,.form input[type=text],.form input[type=number]{font:inherit; font-size:.95rem; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--cha); width:100%; -webkit-appearance:none; appearance:none}
+  .form select{background-image:linear-gradient(45deg, transparent 50%, var(--kin) 50%), linear-gradient(135deg, var(--kin) 50%, transparent 50%); background-position:calc(100% - 20px) 55%, calc(100% - 14px) 55%; background-size:6px 6px; background-repeat:no-repeat}
+  .form input::placeholder{color:var(--muted)}
+  .f-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .choice{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  .choice button{padding:11px 12px; border-radius:12px; border:1px solid var(--line); background:var(--paper); font-size:.88rem; text-align:left; line-height:1.4; transition:border-color .12s ease, background .12s ease}
+  .choice button:hover{border-color:var(--momo)}
+  .choice button.on{border-color:var(--momo); background:#fff; box-shadow:inset 0 0 0 1px var(--momo); color:var(--cha)}
+  .check{display:flex; gap:8px; align-items:center; font-size:.9rem; color:var(--cha-2)}
+  .check input{width:18px; height:18px; accent-color:var(--momo-deep)}
+  .seat-hero{border-radius:16px; overflow:hidden; box-shadow:var(--shadow); background:#1a1020}
+  .seat-hero img{width:100%; display:block; aspect-ratio:16/9; object-fit:cover}
+  .info{display:grid; grid-template-columns:1fr 1fr; gap:12px 18px; margin:18px 0 0; padding-top:16px; border-top:1px solid var(--line); font-size:.86rem}
+  .info div{display:grid; gap:2px}
+  .info dt{color:var(--muted); font-size:.66rem; letter-spacing:.18em; margin:0}
+  .info dd{margin:0; color:var(--cha-2); line-height:1.6}
+  .thumbs{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px auto 0; max-width:760px; width:100%}
+  .thumbs img{width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:10px; box-shadow:var(--shadow)}
+  @media (max-width:520px){ .f-grid,.choice,.info{grid-template-columns:1fr} }
+
+  /* ---------- アプリ型(64タイプ診断) ---------- */
+  .app{padding:12px 0 40px}
+  .screen{width:min(100% - 32px, 480px); margin-inline:auto}
+  .app-card{background:#fff; border:1px solid var(--momo-soft); border-radius:22px; box-shadow:inset 0 0 0 5px #fff, inset 0 0 0 6px var(--kin-line), var(--shadow); padding:30px 24px 28px; display:grid; gap:14px; justify-items:center; text-align:center}
+  .app-card .latin{display:block}
+  .app-logo{width:64px; height:64px; border-radius:50%}
+  .app-card h1{font-size:clamp(1.9rem, 7vw, 2.4rem); line-height:1.35; letter-spacing:.1em}
+  .app-card h1 em{font-style:normal; color:var(--momo-deep)}
+  .app-lede{color:var(--cha-2); font-size:.94rem}
+  .pill-row{display:flex; flex-wrap:wrap; gap:6px; justify-content:center}
+  .pill{font-size:.7rem; letter-spacing:.1em; padding:4px 10px; border-radius:999px; border:1px solid var(--line); color:var(--cha-2); background:var(--paper)}
+  .pill.on{border-color:var(--momo); color:var(--momo-deep); background:#fff}
+  .btn.big{width:100%; padding:17px 30px; font-size:1.05rem; margin-top:6px}
+  .app-card .progress{width:100%}
+  .app-card .q-text.big{font-size:1.25rem; text-align:left; width:100%; margin-bottom:6px}
+  .app-card .answers{width:100%}
+  .app-card .q-foot{width:100%}
+  .result64{gap:10px; padding-top:26px}
+  .r-no{font-family:"Cormorant Garamond",serif; font-weight:600; letter-spacing:.2em; color:var(--kin); font-size:.9rem}
+  .r-name{font-size:clamp(1.7rem, 7vw, 2.3rem); line-height:1.3; letter-spacing:.08em; font-weight:700}
+  .rare{display:flex; gap:10px; align-items:center; font-size:.8rem; color:var(--cha-2); letter-spacing:.08em}
+  .rare .stars{color:var(--kin); letter-spacing:.1em; font-size:1rem}
+  .radar{width:100%; max-width:320px; height:auto; margin-top:4px}
+  .r-desc{text-align:left; color:var(--cha-2); font-size:.94rem; line-height:1.9; border-top:1px solid var(--line); padding-top:14px; width:100%}
+  .result64 .rc-foot{width:100%; padding-inline:0}
+  .app .share{margin-top:22px}
+  .app .rec{margin-top:24px}
+
+  /* 座席診断の見本: 同じ5枚を複製し、1組分ずつ一定速度で流す */
+  .seat-preview{width:100%; min-width:0; margin-top:18px}
+  .seat-preview-window{overflow:hidden; width:100%; padding:10px 0 18px}
+  .seat-preview-track{display:flex; width:max-content; animation:seat-preview-scroll 45s linear infinite}
+  .seat-preview-group{display:flex; flex-shrink:0; gap:16px; padding-right:16px}
+  .seat-preview-group img{display:block; flex:none; width:clamp(260px,32vw,360px); height:auto; align-self:flex-start; border-radius:10px; box-shadow:var(--shadow)}
+  .seat-preview-window:hover .seat-preview-track{animation-play-state:paused}
+  @keyframes seat-preview-scroll{to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){
+    .seat-preview-window{overflow-x:auto}
+    .seat-preview-group[aria-hidden="true"]{display:none}
+  }
+</style>
+
+<header class="wrap top">
+  <a class="logo" href="/oshimamori/" aria-label="推し守 トップへ">
+    <img src="/oshimamori/images/869795f54454e77f2167.png" alt="推し守 ロゴ" width="56" height="56">
+    <span class="wordmark">推し守<small>Oshi Mamori</small></span>
+  </a>
+  <nav>
+    <a href="#menu">診断一覧</a>
+    <a href="/oshimamori/zaseki.html">座席診断</a>
+    <a href="/oshimamori/type64.html">64タイプ診断</a>
+    <a href="/oshimamori/#product">推し守スプレー</a>
+    <a href="/oshimamori/">トップへ戻る</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hub-hero wrap">
+    <span class="latin">Oshi Mamori Fortune</span>
+    <h1>推し守 診断</h1>
+    <p>推し活タイプ、推しとのご縁、今日の推し運。あなたの願いのかたちを見つけて、推し守にひと吹き。</p>
+  </section>
+
+  <section id="menu" style="padding-top:36px">
+    <div class="wrap">
+      <div class="menu menu-3">
+        <a class="m-item" href="/oshimamori/zaseki.html">
+          <span class="seal">席</span>
+          <span class="m-body"><span class="m-status on">公開中</span><h3>座席診断</h3><p>会場と座席を入れると、その席のタイプ(全14種)と今日の運勢がわかります。</p></span>
+          <span class="m-arrow">→</span>
+        </a>
+        <a class="m-item" href="/oshimamori/type64.html">
+          <span class="seal">型</span>
+          <span class="m-body"><span class="m-status on">公開中</span><h3>推し活64タイプ診断</h3><p>12問で、6つの軸からあなたの推し活タイプ(全64種)を見立てます。約1分。</p></span>
+          <span class="m-arrow">→</span>
+        </a>
+        <a class="m-item soon" href="/oshimamori/type64.html">
+          <span class="seal">縁</span>
+          <span class="m-body"><span class="m-status">準備中</span><h3>推しとのご縁診断</h3><p>あなたと推しの誕生日から、ふたりのご縁の型と、縁を結ぶ願い札を占います。</p></span>
+          <span class="m-arrow">→</span>
+        </a>
+        <a class="m-item soon" href="/oshimamori/type64.html">
+          <span class="seal">運</span>
+          <span class="m-body"><span class="m-status">準備中</span><h3>今日の推し運おみくじ</h3><p>毎日一回引ける、今日の推し活運。ラッキーアクションつき。</p></span>
+          <span class="m-arrow">→</span>
+        </a>
+        <a class="m-item soon" href="/oshimamori/type64.html">
+          <span class="seal">沼</span>
+          <span class="m-body"><span class="m-status">準備中</span><h3>沼レベル診断</h3><p>あなたの沼の深さをパーセントで。友だちと見せ合う用。</p></span>
+          <span class="m-arrow">→</span>
+        </a>
+        <a class="m-item soon" href="/oshimamori/type64.html">
+          <span class="seal">札</span>
+          <span class="m-body"><span class="m-status">準備中</span><h3>推し守タロット</h3><p>一枚引きで、今週の推し活に必要な願い札を。</p></span>
+          <span class="m-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <img src="/oshimamori/images/869795f54454e77f2167.png" alt="">
+  <p class="disc">診断は娯楽としてお楽しみください。推し守スプレーは願掛けのための雑貨(空間・布製品用アロマスプレー)です。効果・効能を保証するものではありません。</p>
+  <nav>
+    <a href="/oshimamori/">推し守 トップ</a>
+    <a href="https://pnca.shop/policies/legal-notice">特定商取引法に基づく表記</a>
+    <a href="/privacy.html">プライバシーポリシー</a>
+  </nav>
+  <p>© 推し守 ／ 販売元: 株式会社PNCA</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+</html>
